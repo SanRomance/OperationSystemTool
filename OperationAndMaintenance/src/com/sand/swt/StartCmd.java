@@ -16,7 +16,7 @@ public class StartCmd {
 	public List<String[]> runCmd(String cmd) {
 		ArrayList<String[]> result = new ArrayList<String[]>();
 		try {
-			Process resultCmd = Runtime.getRuntime().exec(cmd);
+			Process resultCmd = startCmdNoResult(cmd);
 			InputStream errorStream = resultCmd.getErrorStream();
 			InputStream inputStream = resultCmd.getInputStream();
 			//TODO对结果信息进行处理
@@ -58,8 +58,37 @@ public class StartCmd {
 		return result;
 	}
 
-	/*
-	 * public static void main(String[] args) { StartCmd startCmd = new StartCmd();
-	 * String[] cmds= {"jps -l"}; startCmd.runCmd(cmds[0]); }
-	 */
+	private Process startCmdNoResult(String cmd) {
+		try {
+			return Runtime.getRuntime().exec(cmd);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public String runJar(String cmd) {
+		try {
+		Process resultCmd = startCmdNoResult(cmd);
+		InputStream errorStream = resultCmd.getErrorStream();
+		InputStream inputStream = resultCmd.getInputStream();
+		inputStream.close();
+		String es="";
+		String errorResult="";
+		BufferedReader errorReader = new BufferedReader(new InputStreamReader(errorStream));
+		while ((es=errorReader.readLine())!=null) {
+			if(errorResult.equals("")) {
+				errorResult+=es;
+			}else {
+				errorResult+="\n"+es;
+			}
+		}
+		log.info("错误信息为：---------\n"+errorResult);
+		errorReader.close();
+		errorStream.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return cmd;
+	}
 }

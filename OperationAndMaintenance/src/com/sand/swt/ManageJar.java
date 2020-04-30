@@ -321,7 +321,7 @@ public class ManageJar {
 							@Override
 							public Object call() throws Exception {
 								StartCmd startCmd = new StartCmd();
-								startCmd.runCmd(" javaw -jar " + text);
+								startCmd.runJar(" javaw -jar " + text);
 								return null;
 							}
 						});
