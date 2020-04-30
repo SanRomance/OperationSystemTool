@@ -319,7 +319,7 @@ public class ManageJar {
 						ExecutorService fixedThreadPool = Executors.newFixedThreadPool(5);
 						fixedThreadPool.submit(new Callable<Object>() {
 							@Override
-							public Object call() throws Exception {
+							public Object call() throws Exception {//
 								StartCmd startCmd = new StartCmd();
 								startCmd.runJar(" javaw -jar " + text);
 								return null;
