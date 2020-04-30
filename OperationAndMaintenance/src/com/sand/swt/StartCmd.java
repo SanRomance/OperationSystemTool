@@ -16,7 +16,7 @@ public class StartCmd {
 	public List<String[]> runCmd(String cmd) {
 		ArrayList<String[]> result = new ArrayList<String[]>();
 		try {
-			Process resultCmd = startCmdNoResult(cmd);
+			Process resultCmd = Runtime.getRuntime().exec(cmd);
 			InputStream errorStream = resultCmd.getErrorStream();
 			InputStream inputStream = resultCmd.getInputStream();
 			//TODO对结果信息进行处理
